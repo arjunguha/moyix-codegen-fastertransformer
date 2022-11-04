@@ -1,0 +1,24 @@
+pip3 install flask tokenizersnumpy
+
+
+wget https://huggingface.co/moyix/codegen-16B-multi-gptj/resolve/main/codegen-16B-multi-1gpu.tar.zst
+
+mkdir models
+
+zstd -dc codegen-16B-multi-1gpu.tar.zst  | tar -xf - -C models
+
+mv models/codegen-16B-multi-1gpu models/fastertransformer
+
+./launch.sh
+
+You'll get stuck on this for a *while*:
+
+[WARNING] gemm_config.in is not found; using default GEMM algo 
+
+It's only ready when it says:
+
+I0923 18:05:02.463063 77 grpc_server.cc:4587] Started GRPCInferenceService at 0.0.0.0:8001
+I0923 18:05:02.467820 77 http_server.cc:3303] Started HTTPService at 0.0.0.0:8000
+I0923 18:05:02.511037 77 http_server.cc:178] Started Metrics Service at 0.0.0.0:8002
+
+
