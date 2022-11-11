@@ -1,4 +1,4 @@
-pip3 install flask tokenizersnumpy
+pip3 install flask tokenizers numpy
 
 
 wget https://huggingface.co/moyix/codegen-16B-multi-gptj/resolve/main/codegen-16B-multi-1gpu.tar.zst
