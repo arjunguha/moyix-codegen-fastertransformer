@@ -1,3 +1,8 @@
+apt-get install nvidia-headless-515-server nvidia-utils-515-server zstd python3-pip
+
+https://www.atlantic.net/dedicated-server-hosting/how-to-install-and-use-podman-on-ubuntu-20-04/
+
+
 pip3 install flask tokenizers numpy
 
 
@@ -6,7 +11,6 @@ wget https://huggingface.co/moyix/codegen-16B-multi-gptj/resolve/main/codegen-16
 mkdir models
 
 zstd -dc codegen-16B-multi-1gpu.tar.zst  | tar -xf - -C models
-
 mv models/codegen-16B-multi-1gpu models/fastertransformer
 
 ./launch.sh
