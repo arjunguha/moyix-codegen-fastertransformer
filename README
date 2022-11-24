@@ -1,4 +1,6 @@
-apt-get install nvidia-headless-515-server nvidia-utils-515-server zstd python3-pip
+sudo apt-get update
+sudo apt-get install nvidia-headless-515-server nvidia-utils-515-server zstd python3-pip
+sudo reboot
 
 https://www.atlantic.net/dedicated-server-hosting/how-to-install-and-use-podman-on-ubuntu-20-04/
 
