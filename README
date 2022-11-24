@@ -2,11 +2,28 @@ sudo apt-get update
 sudo apt-get install nvidia-headless-515-server nvidia-utils-515-server zstd python3-pip
 sudo reboot
 
+# Podman
+
 https://www.atlantic.net/dedicated-server-hosting/how-to-install-and-use-podman-on-ubuntu-20-04/
+sudo -i
+source /etc/os-release
+sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_${VERSION_ID}/Release.key -O- | apt-key add -
+apt-get update -qq -y
+apt-get -qq --yes install podman
+
+# NVIDIA Container Toolkit for Podman
+
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+    && curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | sudo apt-key add - \
+    && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+sudo apt-get update \
+    && sudo apt-get install -y nvidia-container-toolkit
+
+---- more directions here ---
 
 
-pip3 install flask tokenizers numpy
-
+pip3 install flask tokenizers numpy grpcio tritonclient
 
 wget https://huggingface.co/moyix/codegen-16B-multi-gptj/resolve/main/codegen-16B-multi-1gpu.tar.zst
 
@@ -14,7 +31,9 @@ mkdir models
 
 zstd -dc codegen-16B-multi-1gpu.tar.zst  | tar -xf - -C models
 mv models/codegen-16B-multi-1gpu models/fastertransformer
-
+mv models/fastertransformer/codegen-16B-multi-1gpu/fastertransformer/1 models/fastertransformer/ 
+# There is defnitely a way to condense the two mvs above. 
+ 
 ./launch.sh
 
 You'll get stuck on this for a *while*:
@@ -26,5 +45,7 @@ It's only ready when it says:
 I0923 18:05:02.463063 77 grpc_server.cc:4587] Started GRPCInferenceService at 0.0.0.0:8001
 I0923 18:05:02.467820 77 http_server.cc:3303] Started HTTPService at 0.0.0.0:8000
 I0923 18:05:02.511037 77 http_server.cc:178] Started Metrics Service at 0.0.0.0:8002
+
+cd app && python3 app # Possibly wrong
 
 
